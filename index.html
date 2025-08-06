@@ -10,18 +10,31 @@
 <body>
     <div class="container">
         <header>
-            <h1>TOEIC文法トレーニング</h1>
+            <h1>英語マスター！</h1>
+            <div class="header-controls">
+                <button id="home-btn" class="icon-btn" title="トップに戻る">🏠</button>
+                <button id="pause-btn" class="icon-btn" title="一時停止">⏸️</button>
+            </div>
             <div class="score-display">
-                <span>スコア: <span id="score">0</span></span>
-                <span>問題: <span id="currentQuestion">1</span>/<span id="totalQuestions">10</span></span>
+                <span>⭐ スコア: <span id="score">0</span></span>
+                <span>📝 問題: <span id="currentQuestion">1</span>/<span id="totalQuestions">20</span></span>
             </div>
         </header>
 
         <main>
             <div id="start-screen" class="screen active">
-                <h2>TOEIC文法問題にチャレンジ！</h2>
-                <p>移動時間や隙間時間を活用して文法力をアップしましょう。</p>
-                <button id="start-btn" class="btn primary">スタート</button>
+                <div class="welcome-emoji">🎯</div>
+                <h2>英語マスターへの道！</h2>
+                <p>楽しく英語を勉強しよう！<br>毎日コツコツやれば必ず上達するよ！</p>
+                <div class="level-select">
+                    <h3>問題数を選ぼう！</h3>
+                    <div class="level-buttons">
+                        <button class="level-btn" data-questions="10">10問<br><span class="level-time">約5分</span></button>
+                        <button class="level-btn selected" data-questions="20">20問<br><span class="level-time">約10分</span></button>
+                        <button class="level-btn" data-questions="50">50問<br><span class="level-time">約25分</span></button>
+                    </div>
+                </div>
+                <button id="start-btn" class="btn primary">スタート！ 🚀</button>
             </div>
 
             <div id="quiz-screen" class="screen">
@@ -34,14 +47,24 @@
             </div>
 
             <div id="result-screen" class="screen">
-                <h2>結果</h2>
+                <div class="result-emoji" id="result-emoji">🎉</div>
+                <h2>お疲れさま！</h2>
                 <div class="result-stats">
-                    <p>正解数: <span id="correct-answers">0</span>/<span id="total-answers">10</span></p>
-                    <p>正答率: <span id="accuracy">0</span>%</p>
+                    <p>🎯 正解数: <span id="correct-answers">0</span>/<span id="total-answers">20</span></p>
+                    <p>📊 正答率: <span id="accuracy">0</span>%</p>
+                    <p id="result-message" class="result-message"></p>
                 </div>
-                <button id="restart-btn" class="btn primary">もう一度チャレンジ</button>
+                <button id="restart-btn" class="btn primary">もう一度チャレンジ！ 💪</button>
             </div>
         </main>
+        
+        <div id="pause-modal" class="modal">
+            <div class="modal-content">
+                <h2>一時停止中 ⏸️</h2>
+                <p>ちょっと休憩？<br>準備ができたら続けよう！</p>
+                <button id="resume-btn" class="btn primary">続ける！ ▶️</button>
+            </div>
+        </div>
     </div>
 
     <script src="questions.js"></script>

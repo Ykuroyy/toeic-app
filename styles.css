@@ -6,9 +6,10 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f5f5f5;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: #333;
     line-height: 1.6;
+    min-height: 100vh;
 }
 
 .container {
@@ -16,24 +17,54 @@ body {
     margin: 0 auto;
     min-height: 100vh;
     background-color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
 header {
-    background-color: #2c3e50;
+    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
     color: white;
     padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: relative;
 }
 
 header h1 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin-bottom: 0.5rem;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.header-controls {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.icon-btn {
+    background: rgba(255,255,255,0.3);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.icon-btn:hover {
+    background: rgba(255,255,255,0.5);
+    transform: scale(1.1);
 }
 
 .score-display {
     display: flex;
-    justify-content: space-between;
-    font-size: 0.9rem;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 main {
@@ -53,62 +84,140 @@ main {
     padding: 2rem;
 }
 
-#start-screen h2 {
-    font-size: 1.8rem;
+.welcome-emoji {
+    font-size: 4rem;
     margin-bottom: 1rem;
-    color: #2c3e50;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+#start-screen h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ff6b6b;
 }
 
 #start-screen p {
     margin-bottom: 2rem;
     color: #666;
+    font-size: 1.1rem;
+}
+
+.level-select {
+    margin: 2rem 0;
+}
+
+.level-select h3 {
+    color: #764ba2;
+    margin-bottom: 1rem;
+}
+
+.level-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.level-btn {
+    background: #f8f9fa;
+    border: 3px solid #e0e0e0;
+    padding: 1rem;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    min-width: 80px;
+}
+
+.level-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.level-btn.selected {
+    background: #feca57;
+    border-color: #ff6b6b;
+    color: white;
+}
+
+.level-time {
+    font-size: 0.8rem;
+    font-weight: normal;
+    display: block;
+    margin-top: 0.2rem;
 }
 
 .question-container {
-    background-color: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 2rem;
+    border-radius: 20px;
     margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .question {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin-bottom: 1.5rem;
     line-height: 1.8;
+    color: #2c3e50;
+    font-weight: 500;
 }
 
 .options {
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 1rem;
 }
 
 .option-btn {
-    background-color: white;
-    border: 2px solid #e0e0e0;
-    padding: 1rem;
+    background: white;
+    border: 3px solid #e0e0e0;
+    padding: 1rem 1.5rem;
     text-align: left;
     cursor: pointer;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 15px;
+    font-size: 1.1rem;
     transition: all 0.3s ease;
+    font-weight: 500;
 }
 
 .option-btn:hover {
-    background-color: #f0f0f0;
-    border-color: #3498db;
+    background: #f0f0f0;
+    border-color: #667eea;
+    transform: translateX(5px);
 }
 
 .option-btn.correct {
-    background-color: #d4edda;
+    background: #d4edda;
     border-color: #28a745;
     color: #155724;
+    animation: correct-answer 0.5s ease;
 }
 
 .option-btn.incorrect {
-    background-color: #f8d7da;
+    background: #f8d7da;
     border-color: #dc3545;
     color: #721c24;
+    animation: shake 0.5s ease;
+}
+
+@keyframes correct-answer {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
 }
 
 .option-btn.disabled {
@@ -117,44 +226,55 @@ main {
 }
 
 .feedback {
-    padding: 1rem;
+    padding: 1.5rem;
     margin-bottom: 1rem;
-    border-radius: 8px;
+    border-radius: 15px;
     display: none;
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
 .feedback.show {
     display: block;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .feedback.correct {
-    background-color: #d4edda;
+    background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
     color: #155724;
-    border: 1px solid #c3e6cb;
 }
 
 .feedback.incorrect {
-    background-color: #f8d7da;
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
     color: #721c24;
-    border: 1px solid #f5c6cb;
 }
 
 .btn {
-    padding: 0.8rem 2rem;
+    padding: 1rem 2.5rem;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .btn.primary {
-    background-color: #3498db;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .btn.primary:hover {
-    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(0,0,0,0.3);
 }
 
 #result-screen {
@@ -162,36 +282,123 @@ main {
     padding: 2rem;
 }
 
+.result-emoji {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    animation: celebrate 1s ease;
+}
+
+@keyframes celebrate {
+    0% { transform: scale(0) rotate(0deg); }
+    50% { transform: scale(1.2) rotate(180deg); }
+    100% { transform: scale(1) rotate(360deg); }
+}
+
 #result-screen h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 2rem;
-    color: #2c3e50;
+    color: #667eea;
 }
 
 .result-stats {
-    background-color: #f8f9fa;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 20px;
     margin-bottom: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .result-stats p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     margin-bottom: 1rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.result-message {
+    font-size: 1.2rem;
+    color: #667eea;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.modal.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-content h2 {
+    color: #667eea;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.modal-content p {
+    color: #666;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
 }
 
 @media (max-width: 480px) {
     header h1 {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
+    }
+    
+    .header-controls {
+        position: static;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    
+    .score-display {
+        flex-direction: column;
+        gap: 0.5rem;
+        font-size: 0.9rem;
     }
     
     .question {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
     
     .option-btn {
-        padding: 0.8rem;
-        font-size: 0.9rem;
+        padding: 0.8rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .level-buttons {
+        flex-direction: column;
+    }
+    
+    .level-btn {
+        width: 100%;
     }
     
     main {

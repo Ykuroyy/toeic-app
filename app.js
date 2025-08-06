@@ -2,13 +2,19 @@ let currentQuestionIndex = 0;
 let score = 0;
 let selectedQuestions = [];
 let userAnswers = [];
+let selectedQuestionCount = 20;
+let isPaused = false;
 
 const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
 const resultScreen = document.getElementById('result-screen');
+const pauseModal = document.getElementById('pause-modal');
 const startBtn = document.getElementById('start-btn');
 const nextBtn = document.getElementById('next-btn');
 const restartBtn = document.getElementById('restart-btn');
+const homeBtn = document.getElementById('home-btn');
+const pauseBtn = document.getElementById('pause-btn');
+const resumeBtn = document.getElementById('resume-btn');
 const questionEl = document.getElementById('question');
 const optionsEl = document.getElementById('options');
 const feedbackEl = document.getElementById('feedback');
@@ -18,6 +24,19 @@ const totalQuestionsEl = document.getElementById('totalQuestions');
 const correctAnswersEl = document.getElementById('correct-answers');
 const totalAnswersEl = document.getElementById('total-answers');
 const accuracyEl = document.getElementById('accuracy');
+const resultEmojiEl = document.getElementById('result-emoji');
+const resultMessageEl = document.getElementById('result-message');
+
+const levelBtns = document.querySelectorAll('.level-btn');
+levelBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        levelBtns.forEach(b => b.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedQuestionCount = parseInt(this.dataset.questions);
+        totalQuestionsEl.textContent = selectedQuestionCount;
+        totalAnswersEl.textContent = selectedQuestionCount;
+    });
+});
 
 function shuffleArray(array) {
     const newArray = [...array];
@@ -32,13 +51,15 @@ function startQuiz() {
     currentQuestionIndex = 0;
     score = 0;
     userAnswers = [];
+    isPaused = false;
     
-    selectedQuestions = shuffleArray(questions).slice(0, 10);
+    selectedQuestions = shuffleArray(questions).slice(0, selectedQuestionCount);
     
     startScreen.classList.remove('active');
     quizScreen.classList.add('active');
     
     totalQuestionsEl.textContent = selectedQuestions.length;
+    totalAnswersEl.textContent = selectedQuestions.length;
     scoreEl.textContent = score;
     
     displayQuestion();
@@ -65,6 +86,8 @@ function displayQuestion() {
 }
 
 function selectAnswer(selectedIndex) {
+    if (isPaused) return;
+    
     const currentQuestion = selectedQuestions[currentQuestionIndex];
     const isCorrect = selectedIndex === currentQuestion.correct;
     
@@ -89,10 +112,10 @@ function selectAnswer(selectedIndex) {
     if (isCorrect) {
         score++;
         scoreEl.textContent = score;
-        feedbackEl.textContent = '正解！ ' + currentQuestion.explanation;
+        feedbackEl.innerHTML = '🎉 正解！<br>' + currentQuestion.explanation;
         feedbackEl.classList.add('show', 'correct');
     } else {
-        feedbackEl.textContent = '不正解。 ' + currentQuestion.explanation;
+        feedbackEl.innerHTML = '😢 残念！<br>' + currentQuestion.explanation;
         feedbackEl.classList.add('show', 'incorrect');
     }
     
@@ -117,8 +140,21 @@ function showResults() {
     const accuracy = Math.round((score / selectedQuestions.length) * 100);
     
     correctAnswersEl.textContent = score;
-    totalAnswersEl.textContent = selectedQuestions.length;
     accuracyEl.textContent = accuracy;
+    
+    if (accuracy >= 90) {
+        resultEmojiEl.textContent = '🏆';
+        resultMessageEl.textContent = 'すごい！天才だね！';
+    } else if (accuracy >= 70) {
+        resultEmojiEl.textContent = '🌟';
+        resultMessageEl.textContent = 'よくできました！その調子！';
+    } else if (accuracy >= 50) {
+        resultEmojiEl.textContent = '💪';
+        resultMessageEl.textContent = 'がんばったね！もう少し！';
+    } else {
+        resultEmojiEl.textContent = '🌱';
+        resultMessageEl.textContent = 'まだまだこれから！一緒にがんばろう！';
+    }
 }
 
 function restartQuiz() {
@@ -126,6 +162,37 @@ function restartQuiz() {
     startScreen.classList.add('active');
 }
 
+function goHome() {
+    if (confirm('トップ画面に戻りますか？\n現在の進捗は失われます。')) {
+        quizScreen.classList.remove('active');
+        resultScreen.classList.remove('active');
+        startScreen.classList.add('active');
+        pauseModal.classList.remove('show');
+        isPaused = false;
+    }
+}
+
+function pauseQuiz() {
+    if (quizScreen.classList.contains('active')) {
+        isPaused = true;
+        pauseModal.classList.add('show');
+    }
+}
+
+function resumeQuiz() {
+    isPaused = false;
+    pauseModal.classList.remove('show');
+}
+
 startBtn.addEventListener('click', startQuiz);
 nextBtn.addEventListener('click', nextQuestion);
 restartBtn.addEventListener('click', restartQuiz);
+homeBtn.addEventListener('click', goHome);
+pauseBtn.addEventListener('click', pauseQuiz);
+resumeBtn.addEventListener('click', resumeQuiz);
+
+pauseModal.addEventListener('click', function(e) {
+    if (e.target === pauseModal) {
+        resumeQuiz();
+    }
+});
