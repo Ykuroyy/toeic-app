@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOEIC文法トレーニング</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TOEIC文法トレーニング</h1>
+            <div class="score-display">
+                <span>スコア: <span id="score">0</span></span>
+                <span>問題: <span id="currentQuestion">1</span>/<span id="totalQuestions">10</span></span>
+            </div>
+        </header>
+
+        <main>
+            <div id="start-screen" class="screen active">
+                <h2>TOEIC文法問題にチャレンジ！</h2>
+                <p>移動時間や隙間時間を活用して文法力をアップしましょう。</p>
+                <button id="start-btn" class="btn primary">スタート</button>
+            </div>
+
+            <div id="quiz-screen" class="screen">
+                <div class="question-container">
+                    <p id="question" class="question"></p>
+                    <div id="options" class="options"></div>
+                </div>
+                <div class="feedback" id="feedback"></div>
+                <button id="next-btn" class="btn primary" style="display: none;">次の問題</button>
+            </div>
+
+            <div id="result-screen" class="screen">
+                <h2>結果</h2>
+                <div class="result-stats">
+                    <p>正解数: <span id="correct-answers">0</span>/<span id="total-answers">10</span></p>
+                    <p>正答率: <span id="accuracy">0</span>%</p>
+                </div>
+                <button id="restart-btn" class="btn primary">もう一度チャレンジ</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
